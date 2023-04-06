@@ -90,20 +90,52 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
-export const updateUser = (name,email,password,skills,about) => async (dispatch) => {
+export const updateUser =
+  (name, email, password, skills, about) => async (dispatch) => {
+    try {
+      dispatch({
+        type: "UPDATE_USER_REQUEST",
+      });
+
+      const { data } = await axios.put(
+        "/api/v1/admin/update",
+        {
+          name,
+          email,
+          password,
+          skills,
+          about,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      dispatch({
+        type: "UPDATE_USER_SUCCESS",
+        payload: data.message,
+      });
+    } catch (error) {
+      dispatch({
+        type: "UPDATE_USER_FAILURE",
+        payload: error.response.data.message,
+      });
+    }
+  };
+export const addTimeline = (title, description, date) => async (dispatch) => {
   try {
     dispatch({
-      type: "UPDATE_USER_REQUEST",
+      type: "ADD_TIMELINE_REQUEST",
     });
 
-    const { data } = await axios.put(
-      "/api/v1/admin/update",
+    const { data } = await axios.post(
+      "/api/v1/admin/timeline/add",
       {
-        name,
-        email,
-        password,
-        skills,
-        about
+        title,
+        description,
+        date,
       },
       {
         headers: {
@@ -113,12 +145,31 @@ export const updateUser = (name,email,password,skills,about) => async (dispatch)
     );
 
     dispatch({
-      type: "UPDATE_USER_SUCCESS",
+      type: "ADD_TIMELINE_SUCCESS",
       payload: data.message,
     });
   } catch (error) {
     dispatch({
-      type: "UPDATE_USER_FAILURE",
+      type: "ADD_TIMELINE_FAILURE",
+      payload: error.response.data.message,
+    });
+  }
+};
+export const deleteTimeline = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "DELETE_TIMELINE_REQUEST",
+    });
+
+    const { data } = await axios.delete(`api/v1/admin/timeline/${id}`);
+
+    dispatch({
+      type: "DELETE_TIMELINE_SUCCESS",
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: "DELETE_TIMELINE_FAILURE",
       payload: error.response.data.message,
     });
   }

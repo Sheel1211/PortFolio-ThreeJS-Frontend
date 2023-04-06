@@ -82,6 +82,28 @@ export const updateReducer = createReducer({},{
         state.loading=false;
         state.error=action.payload;
     },
+    "ADD_TIMELINE_REQUEST":(state)=>{
+        state.loading=true;
+    },
+    "ADD_TIMELINE_SUCCESS":(state,action)=>{
+        state.loading=false;
+        state.message=action.payload;
+    },
+    "ADD_TIMELINE_FAILURE":(state,action)=>{
+        state.loading=false;
+        state.error=action.payload;
+    },
+    "DELETE_TIMELINE_REQUEST":(state)=>{
+        state.loading=true;
+    },
+    "DELETE_TIMELINE_SUCCESS":(state,action)=>{
+        state.loading=false;
+        state.message=action.payload;
+    },
+    "DELETE_TIMELINE_FAILURE":(state,action)=>{
+        state.loading=false;
+        state.error=action.payload;
+    },
     "CLEAR_ERRORS":(state)=>{
         state.error=null;
     },

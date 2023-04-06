@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, loadUser } from "./actions/user";
 import AdminPanel from "./components/Admin/AdminPanel";
+import Timeline from "./components/Admin/Timeline";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.login);
@@ -37,6 +38,8 @@ function App() {
             <Route
               path="/account"
               element={isAuthenticated ? <AdminPanel /> : <Login />}
+            />
+            <Route path="/admin/timeline" element={isAuthenticated ? <Timeline /> : <Login />}
             />
           </Routes>
           <Footer />
