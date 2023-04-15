@@ -4,36 +4,46 @@ import { useAlert } from "react-alert";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { FaTrash } from "react-icons/fa";
-import { addTimeline, deleteTimeline, getUser } from "../../actions/user";
-const Timeline = () => {
+import { addProject, getUser } from "../../actions/user";
+import { ProjectCard } from "../Projects/Projects";
+export const Projects = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
-
-  const { message, error, loading } = useSelector((state) => state.update);
+  const { error, message, loading } = useSelector((state) => state.update);
   const { user } = useSelector((state) => state.user.user);
+  // url, title, image, description, techStack
+
+  const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
+  const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
+  const [techStack, setTechStack] = useState("");
 
-  const submitHandler = async (e) => { 
+  const submitHandler = async (e) => {
     e.preventDefault();
-    await dispatch(addTimeline(title, description, date));
-    dispatch(getUser());
-
-
-  };
-  const deleteHandler = async(id) => {
-    await dispatch(deleteTimeline(id));
+    await dispatch(addProject(url, title, image, description, techStack));
     dispatch(getUser());
   };
-  
-  
+
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    const Reader = new FileReader();
+    Reader.readAsDataURL(file);
+
+    Reader.onload = () => {
+      if (Reader.readyState === 2) {
+        setImage(Reader.result);
+      }
+    };
+  };
+
   
   useEffect(() => {
     if (error) {
       alert.error(error);
-      dispatch({ type: "CLEAR_ERRORS" });
+      dispatch({
+        type: "CLEAR_ERRORS",
+      });
     }
     if (message) {
       alert.success(message);
@@ -41,6 +51,7 @@ const Timeline = () => {
     }
     
   }, [alert, error, message, dispatch]);
+
   return (
     <div className="adminPanel">
       <div className="adminPanelContainer">
@@ -68,16 +79,30 @@ const Timeline = () => {
           />
           <input
             type="text"
+            placeholder="URL"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            className="adminPanelInputs"
+          />
+          <input
+            type="file"
+            placeholder="Image"
+            onChange={handleImage}
+            className="adminPanelFileUpload"
+            accept="image/*"
+          />
+          <input
+            type="text"
             placeholder="Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="adminPanelInputs"
           />
           <input
-            type="date"
-            placeholder="Date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            type="text"
+            placeholder="TechStack"
+            value={techStack}
+            onChange={(e) => setTechStack(e.target.value)}
             className="adminPanelInputs"
           />
 
@@ -90,35 +115,23 @@ const Timeline = () => {
           </Button>
         </form>
         <div className="adminPanelYoutubeVideos">
-        {user &&
-            user.timeline &&
-            user.timeline.map((item) => (
-              
-               <div className="youtubeCard" key={item._id}>
-                 <Typography variant="h6">{item.title}</Typography>
-                 <Typography variant="body1" style={{ letterSpacing: "2px" }}>
-                   {item.description}
-                 </Typography>
-                 <Typography variant="body1" style={{ fontWeight: 600 }}>
-                   {item.date.toString().split("T")[0]}
-                 </Typography>
-
-                <Button
-                  style={{
-                    margin: "auto",
-                    display: "block",
-                    color: "rgba(40,40,40,0.7)",
-                  }}
-                  onClick={() => deleteHandler(item._id)}
-                >
-                  <FaTrash />
-                </Button>
-              </div>
+          {user &&
+            user.projects &&
+            user.projects.map((item) => (
+              <ProjectCard
+                id={item._id}
+                key={item._id}
+                url={item.url}
+                projectImage={item.image.url}
+                projectTitle={item.title}
+                description={item.description}
+                technologies={item.techStack}
+                isAdmin={true}
+              />
             ))}
         </div>
       </div>
     </div>
   );
 };
-
-export default Timeline;
+export default Projects;

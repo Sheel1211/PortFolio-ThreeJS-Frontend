@@ -20,7 +20,7 @@ import {
   SiThreedotjs,
 } from "react-icons/si";
 import YoutubeCard from "../YoutubeCard/YoutubeCard";
-const Home = () => {
+const Home = ({timelines,youtube,skills}) => {
   useEffect(() => {
     const textureLoader = new THREE.TextureLoader();
     const moonTexture = textureLoader.load(moonImage);
@@ -113,28 +113,28 @@ const Home = () => {
       <canvas className="homeCanvas"></canvas>
       <div className="homeContainer">
         <Typography variant="h3">TIMELINE</Typography>
-        <TimeLine timelines={[1, 2, 3, 4]}></TimeLine>
+        <TimeLine timelines={timelines}></TimeLine>
       </div>
       <div className="homeSkills">
         <Typography variant="h3">SKILLS</Typography>
         <div className="homeCubeSkills">
           <div className="homeCubeSkillsFaces homeCubeSkillsFace1">
-            <img src={customImg} alt="Face1" />
+            <img src={skills.image1.url} alt="Face1" />
           </div>
           <div className="homeCubeSkillsFaces homeCubeSkillsFace2">
-            <img src={customImg} alt="Face2" />
+            <img src={skills.image2.url} alt="Face2" />
           </div>
           <div className="homeCubeSkillsFaces homeCubeSkillsFace3">
-            <img src={customImg} alt="Face3" />
+            <img src={skills.image3.url} alt="Face3" />
           </div>
           <div className="homeCubeSkillsFaces homeCubeSkillsFace4">
-            <img src={customImg} alt="Face4" />
+            <img src={skills.image4.url} alt="Face4" />
           </div>
           <div className="homeCubeSkillsFaces homeCubeSkillsFace5">
-            <img src={customImg} alt="Face5" />
+            <img src={skills.image5.url} alt="Face5" />
           </div>
           <div className="homeCubeSkillsFaces homeCubeSkillsFace6">
-            <img src={customImg} alt="Face6" />
+            <img src={skills.image6.url} alt="Face6" />
           </div>
         </div>
 
@@ -152,10 +152,19 @@ const Home = () => {
         </div>
       </div>
 
+
       <div className="homeYoutube">
         <Typography variant="h3">YOUTUBE VIDEOS</Typography>
         <div className="homeYoutubeWrapper">
-          <YoutubeCard />
+          {youtube.map((item)=>(
+            <YoutubeCard
+            image={item.image.url}
+            title={item.title}
+            url={item.url}
+            id={item._id}
+            key={item._id}
+            />
+          ))}
           
         </div>
       </div>

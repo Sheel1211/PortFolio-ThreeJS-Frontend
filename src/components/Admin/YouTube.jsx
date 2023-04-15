@@ -4,32 +4,40 @@ import { useAlert } from "react-alert";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { FaTrash } from "react-icons/fa";
-import { addTimeline, deleteTimeline, getUser } from "../../actions/user";
-const Timeline = () => {
+import { addYoutube, deleteYoutube, getUser } from "../../actions/user";
+import YoutubeCard from "../YoutubeCard/YoutubeCard";
+const YouTube = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
 
   const { message, error, loading } = useSelector((state) => state.update);
   const { user } = useSelector((state) => state.user.user);
+  const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
+  const [image, setImage] = useState("");
 
-  const submitHandler = async (e) => { 
+  const submitHandler = async (e) => {
     e.preventDefault();
-    await dispatch(addTimeline(title, description, date));
-    dispatch(getUser());
-
-
-  };
-  const deleteHandler = async(id) => {
-    await dispatch(deleteTimeline(id));
+    await dispatch(addYoutube(title, url, image));
     dispatch(getUser());
   };
-  
-  
-  
+  const deleteHandler = (id) => {
+    dispatch(deleteYoutube(id));
+  };
+
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    const Reader = new FileReader();
+
+    Reader.readAsDataURL(file);
+
+    Reader.onload = () => {
+      if (Reader.readyState === 2) {
+        setImage(Reader.result);
+      }
+    };
+  };
+
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -39,7 +47,6 @@ const Timeline = () => {
       alert.success(message);
       dispatch({ type: "CLEAR_MESSAGE" });
     }
-    
   }, [alert, error, message, dispatch]);
   return (
     <div className="adminPanel">
@@ -68,17 +75,17 @@ const Timeline = () => {
           />
           <input
             type="text"
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            placeholder="URL"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
             className="adminPanelInputs"
           />
           <input
-            type="date"
-            placeholder="Date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="adminPanelInputs"
+            type="file"
+            placeholder="Image"
+            onChange={handleImage}
+            className="adminPanelFileUpload"
+            accept="image/*"
           />
 
           <Link to="/Account">
@@ -90,35 +97,20 @@ const Timeline = () => {
           </Button>
         </form>
         <div className="adminPanelYoutubeVideos">
-        {user &&
-            user.timeline &&
-            user.timeline.map((item) => (
-              
-               <div className="youtubeCard" key={item._id}>
-                 <Typography variant="h6">{item.title}</Typography>
-                 <Typography variant="body1" style={{ letterSpacing: "2px" }}>
-                   {item.description}
-                 </Typography>
-                 <Typography variant="body1" style={{ fontWeight: 600 }}>
-                   {item.date.toString().split("T")[0]}
-                 </Typography>
-
-                <Button
-                  style={{
-                    margin: "auto",
-                    display: "block",
-                    color: "rgba(40,40,40,0.7)",
-                  }}
-                  onClick={() => deleteHandler(item._id)}
-                >
-                  <FaTrash />
-                </Button>
-              </div>
-            ))}
+          {user && user.youtube && user.youtube.map((item)=>(
+            <YoutubeCard 
+            key={item._id}
+            url={item.url}
+            title={item.title}
+            image={item.image.url}
+            isAdmin={true}
+            id={item._id}
+            />
+          ))}
         </div>
       </div>
     </div>
   );
 };
 
-export default Timeline;
+export default YouTube;

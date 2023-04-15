@@ -124,7 +124,7 @@ export const updateUser =
       });
     }
   };
-export const addTimeline = (title, description, date) => async (dispatch) => {
+export const addTimeline = (title, description, date="1970-01-01T00:00:00.000+00:00") => async (dispatch) => {
   try {
     dispatch({
       type: "ADD_TIMELINE_REQUEST",
@@ -161,7 +161,7 @@ export const deleteTimeline = (id) => async (dispatch) => {
       type: "DELETE_TIMELINE_REQUEST",
     });
 
-    const { data } = await axios.delete(`api/v1/admin/timeline/${id}`);
+    const { data } = await axios.delete(`/api/v1/admin/timeline/${id}`);
 
     dispatch({
       type: "DELETE_TIMELINE_SUCCESS",
@@ -170,6 +170,109 @@ export const deleteTimeline = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "DELETE_TIMELINE_FAILURE",
+      payload: error.response.data.message,
+    });
+  }
+};
+export const addYoutube = (title, url, image) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "ADD_YOUTUBE_REQUEST",
+    });
+
+    const { data } = await axios.post(
+      "/api/v1/admin/youtube/add",
+      {
+        title,
+        url,
+        image,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    dispatch({
+      type: "ADD_YOUTUBE_SUCCESS",
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: "ADD_YOUTUBE_FAILURE",
+      payload: error.response.data.message,
+    });
+  }
+};
+export const deleteYoutube = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "DELETE_YOUTUBE_REQUEST",
+    });
+
+    const { data } = await axios.delete(`/api/v1/admin/youtube/${id}`);
+
+    dispatch({
+      type: "DELETE_YOUTUBE_SUCCESS",
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: "DELETE_YOUTUBE_FAILURE",
+      payload: error.response.data.message,
+    });
+  }
+};
+export const addProject =
+  (url, title, image, description, techStack) => async (dispatch) => {
+    try {
+      dispatch({
+        type: "ADD_PROJECT_REQUEST",
+      });
+
+      const { data } = await axios.post(
+        "/api/v1/admin/project/add",
+        {
+          url,
+          title,
+          image,
+          description,
+          techStack,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      dispatch({
+        type: "ADD_PROJECT_SUCCESS",
+        payload: data.message,
+      });
+    } catch (error) {
+      dispatch({
+        type: "ADD_PROJECT_FAILURE",
+        payload: error.response.data.message,
+      });
+    }
+  };
+export const deleteProject = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "DELETE_PROJECT_REQUEST",
+    });
+
+    const { data } = await axios.delete(`/api/v1/admin/project/${id}`);
+
+    dispatch({
+      type: "DELETE_PROJECT_SUCCESS",
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: "DELETE_PROJECT_FAILURE",
       payload: error.response.data.message,
     });
   }

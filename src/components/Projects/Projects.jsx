@@ -3,8 +3,16 @@ import { Button, Typography } from '@mui/material'
 import React from 'react'
 import { AiOutlineProject } from 'react-icons/ai'
 import { FaRegSmileWink } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { deleteProject, getUser } from '../../actions/user';
 import "./Projects.css"
-const ProjectCard=({url,projectImage,projectTitle,description,technologies,isAdmin=false,})=>{
+export const ProjectCard=({url,projectImage,projectTitle,description,technologies,isAdmin=false,id})=>{
+    const dispatch=useDispatch();
+    const deleteHandler = async (id) => {
+        await dispatch(deleteProject(id));
+        dispatch(getUser());
+      };
+    
     return (
         <>
             <a href={url} className="projectCard" target="blank">
@@ -21,7 +29,7 @@ const ProjectCard=({url,projectImage,projectTitle,description,technologies,isAdm
             </a>
 
             {isAdmin && (
-                <Button style={{color:"rgba(40,40,0.7)"}}>
+                <Button style={{color:"rgba(40,40,0.7)"}} onClick={()=>deleteHandler(id)} >
                     <Delete />
                 </Button>
             )}
