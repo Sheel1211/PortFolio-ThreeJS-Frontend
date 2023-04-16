@@ -17,7 +17,7 @@ import {Projects as Project} from "./components/Admin/Projects";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.login);
-  const { loading,user } = useSelector((state) => state.user.user);
+  const { loading,user } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,9 +33,9 @@ function App() {
         <>
           <Header />
           <Routes>
-            <Route path="/" element={<Home youtube={user.youtube} timelines={user.timeline} skills={user.skills}/>} />
-            <Route path="/about" element={<About />} />
-            <Route path="/projects" element={<Projects />} />
+            <Route path="/" element={<Home youtube={user.user.youtube} timelines={user.user.timeline} skills={user.user.skills}/>} />
+            <Route path="/about" element={<About about={user.user.about}/>} />
+            <Route path="/projects" element={<Projects projects={user.user.projects}/>} />
             <Route path="/contact" element={<Contact />} />
             <Route
               path="/account"

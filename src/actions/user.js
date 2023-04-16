@@ -124,37 +124,39 @@ export const updateUser =
       });
     }
   };
-export const addTimeline = (title, description, date="1970-01-01T00:00:00.000+00:00") => async (dispatch) => {
-  try {
-    dispatch({
-      type: "ADD_TIMELINE_REQUEST",
-    });
+export const addTimeline =
+  (title, description, date = "1970-01-01T00:00:00.000+00:00") =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: "ADD_TIMELINE_REQUEST",
+      });
 
-    const { data } = await axios.post(
-      "/api/v1/admin/timeline/add",
-      {
-        title,
-        description,
-        date,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
+      const { data } = await axios.post(
+        "/api/v1/admin/timeline/add",
+        {
+          title,
+          description,
+          date,
         },
-      }
-    );
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    dispatch({
-      type: "ADD_TIMELINE_SUCCESS",
-      payload: data.message,
-    });
-  } catch (error) {
-    dispatch({
-      type: "ADD_TIMELINE_FAILURE",
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: "ADD_TIMELINE_SUCCESS",
+        payload: data.message,
+      });
+    } catch (error) {
+      dispatch({
+        type: "ADD_TIMELINE_FAILURE",
+        payload: error.response.data.message,
+      });
+    }
+  };
 export const deleteTimeline = (id) => async (dispatch) => {
   try {
     dispatch({
@@ -273,6 +275,36 @@ export const deleteProject = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "DELETE_PROJECT_FAILURE",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const contactUs = (name, email, message) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "CONTACT_US_REQUEST",
+    });
+
+    const { data } = await axios.post("/api/v1/contact", {
+      name,
+      email,
+      message,
+    },
+    {
+      headers: { 
+        "Content-Type": "application/json",
+      },
+    });
+
+    dispatch({
+      type: "CONTACT_US_SUCCESS",
+      payload : data.message,
+    });
+
+  } catch (error) {
+    dispatch({
+      type: "CONTACT_US_FAILURE",
       payload: error.response.data.message,
     });
   }
