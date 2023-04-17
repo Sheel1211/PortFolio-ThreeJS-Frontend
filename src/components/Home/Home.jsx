@@ -20,7 +20,9 @@ import {
   SiThreedotjs,
 } from "react-icons/si";
 import YoutubeCard from "../YoutubeCard/YoutubeCard";
-const Home = ({timelines,youtube,skills}) => {
+import { MouseOutlined } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+const Home = ({ timelines, youtube, skills }) => {
   useEffect(() => {
     const textureLoader = new THREE.TextureLoader();
     const moonTexture = textureLoader.load(moonImage);
@@ -107,10 +109,45 @@ const Home = ({timelines,youtube,skills}) => {
       renderer.render(scene, camera);
     };
     animate();
+
+    return window.addEventListener("scroll", (e) => {
+      camera.rotation.y = window.scrollY * 0.003;
+      camera.rotation.z = window.scrollY * 0.001;
+
+      const skillsBox = document.getElementById("homeskillsBox");
+
+      if (window.scrollY > 1500) {
+        skillsBox.style.animationName = "homeskillsBoxAnimationOn";
+      } else {
+        skillsBox.style.animationName = "homeskillsBoxAnimationOff";
+      }
+    });
   }, []); // We will write 3js code in useEffect as it renders only once.
+
   return (
     <div className="home">
       <canvas className="homeCanvas"></canvas>
+      <div className="homeCanvasContainer">
+        <Typography variant="h1">
+          <p>S</p>
+          <p>H</p>
+          <p>E</p>
+          <p>E</p>
+          <p>L</p>
+        </Typography>
+        <div className="homeCanvasBox">
+          <Typography variant="h2">DESIGNER</Typography>
+          <Typography variant="h2">DEVELOPER</Typography>
+          <Typography variant="h2">TEACHER</Typography>
+          <Typography variant="h2">CONTENT CREATOR</Typography>
+        </div>
+
+        <Link to="/projects">VIEW WORK</Link>
+      </div>
+
+      <div className="homeScrollBtn">
+        <MouseOutlined />
+      </div>
       <div className="homeContainer">
         <Typography variant="h3">TIMELINE</Typography>
         <TimeLine timelines={timelines}></TimeLine>
@@ -139,33 +176,31 @@ const Home = ({timelines,youtube,skills}) => {
         </div>
 
         <div className="cubeShadow"></div>
-        <div className="homeskillsBox">
-          <SiCplusplus/>
-          <SiReact/>
-          <SiJavascript/>
-          <SiMongodb/>
-          <SiNodedotjs/>
-          <SiExpress/>
-          <SiCss3/>
-          <SiHtml5/>
-          <SiThreedotjs/>
+        <div className="homeskillsBox" id="homeskillsBox">
+          <SiCplusplus />
+          <SiReact />
+          <SiJavascript />
+          <SiMongodb />
+          <SiNodedotjs />
+          <SiExpress />
+          <SiCss3 />
+          <SiHtml5 />
+          <SiThreedotjs />
         </div>
       </div>
-
 
       <div className="homeYoutube">
         <Typography variant="h3">YOUTUBE VIDEOS</Typography>
         <div className="homeYoutubeWrapper">
-          {youtube.map((item)=>(
+          {youtube.map((item) => (
             <YoutubeCard
-            image={item.image.url}
-            title={item.title}
-            url={item.url}
-            id={item._id}
-            key={item._id}
+              image={item.image.url}
+              title={item.title}
+              url={item.url}
+              id={item._id}
+              key={item._id}
             />
           ))}
-          
         </div>
       </div>
     </div>
@@ -174,6 +209,5 @@ const Home = ({timelines,youtube,skills}) => {
 
 export default Home;
 // Perspective camera is the camera like which our eyes see
-
 
 //In typography if we don't give variant then default is p tag.
