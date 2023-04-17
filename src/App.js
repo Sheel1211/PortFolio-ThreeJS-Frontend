@@ -14,6 +14,7 @@ import AdminPanel from "./components/Admin/AdminPanel";
 import Timeline from "./components/Admin/Timeline";
 import YouTube from "./components/Admin/YouTube";
 import {Projects as Project} from "./components/Admin/Projects";
+import Loader from "./components/Loader/Loader";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.login);
@@ -28,7 +29,7 @@ function App() {
   return (
     <Router>
       {loading ? (
-        <div>Loading</div>
+        <Loader />
       ) : (
         <>
           <Header />
