@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import React from 'react'
 
 import "./Footer.css"
-import { BsGithub , BsInstagram} from "react-icons/bs"
+import { BsGithub , BsInstagram, BsLinkedin} from "react-icons/bs"
 export const Footer = () => {
   return (
     <div className="footer">
@@ -24,11 +24,11 @@ export const Footer = () => {
         <a href="https://github.com/Sheel1211" target="blank">
             <BsGithub />
         </a>
-        <a href="https://github.com/Sheel1211" target="blank">
+        <a href="https://www.instagram.com/pandyasheel416/" target="blank">
             <BsInstagram />
         </a>
-        <a href="https://github.com/Sheel1211" target="blank">
-            <BsGithub />
+        <a href="https://www.linkedin.com/in/sheel-pandya-160458219/" target="blank">
+            <BsLinkedin />
         </a>
     </div>
     </div>
