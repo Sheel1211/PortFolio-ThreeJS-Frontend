@@ -40,7 +40,7 @@ const Contact = () => {
           className="contactContainerForm"
           onSubmit={contactFormHandler}
         >
-          <Typography variant="h4">Contact Us</Typography>
+          <Typography variant="h4">Contact Me</Typography>
           <input
             type="text"
             required

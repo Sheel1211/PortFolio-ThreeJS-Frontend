@@ -231,8 +231,8 @@ const AdminPanel = () => {
               <input
                 type="text"
                 placeholder="Quote"
-                value={about.quote}
-                onChange={(e) => setAbout({ ...about, quote: e.target.value })}
+                value={about.quotes}
+                onChange={(e) => setAbout({ ...about, quotes: e.target.value })}
                 className="adminPanelInputs"
               />
 

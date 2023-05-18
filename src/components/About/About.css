@@ -75,7 +75,7 @@
       transform: translateX(0%) translateY(0%);
     }
   }
-  /* @media screen and (max-width: 600px) {
+  @media screen and (max-width: 600px) {
     .about {
       align-items: flex-end;
       padding-top: 100px;
@@ -100,4 +100,4 @@
       height: 100px;
       transform: translateY(-80%);
     }
-  } */
+  }

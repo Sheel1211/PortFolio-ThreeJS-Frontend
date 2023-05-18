@@ -15,7 +15,7 @@ export const Footer = () => {
         </Typography>
 
         <Link to="/contact" className="footerContactBtn" >
-            <Typography>Contact Us</Typography>
+            <Typography>Contact Me</Typography>
             </Link>
     </div>
 
