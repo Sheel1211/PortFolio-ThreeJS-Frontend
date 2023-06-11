@@ -35,6 +35,7 @@ export const login = (email, password) => async (dispatch) => {
         headers: {
           "Content-Type": "application/json",
         },
+        withCredentials:true,
       }
     );
 
@@ -56,7 +57,9 @@ export const logout = () => async (dispatch) => {
       type: "LOGOUT_REQUEST",
     });
 
-    const { data } = await axios.get("https://portfolio-threejs.onrender.com/api/v1/logout");
+    const { data } = await axios.get("https://portfolio-threejs.onrender.com/api/v1/logout",{
+      withCredentials:true,
+    });
 
     dispatch({
       type: "LOGOUT_SUCCESS",
@@ -110,6 +113,7 @@ export const updateUser =
           headers: {
             "Content-Type": "application/json",
           },
+          withCredentials:true,
         }
       );
 
@@ -125,24 +129,27 @@ export const updateUser =
     }
   };
 export const addTimeline =
-  (title, description, date = "1970-01-01T00:00:00.000+00:00") =>
+  (title, description, image,date = "1970-01-01T00:00:00.000+00:00") =>
   async (dispatch) => {
     try {
       dispatch({
         type: "ADD_TIMELINE_REQUEST",
       });
-
+      
+      // console.log(title + " "+ description + " " + image + " " + date);
       const { data } = await axios.post(
         "https://portfolio-threejs.onrender.com/api/v1/admin/timeline/add",
         {
           title,
           description,
+          image,
           date,
         },
         {
           headers: {
             "Content-Type": "application/json",
           },
+          withCredentials:true,
         }
       );
 
@@ -163,7 +170,9 @@ export const deleteTimeline = (id) => async (dispatch) => {
       type: "DELETE_TIMELINE_REQUEST",
     });
 
-    const { data } = await axios.delete(`https://portfolio-threejs.onrender.com/api/v1/admin/timeline/${id}`);
+    const { data } = await axios.delete(`https://portfolio-threejs.onrender.com/api/v1/admin/timeline/${id}`,{
+      withCredentials:true,
+    });
 
     dispatch({
       type: "DELETE_TIMELINE_SUCCESS",
@@ -193,6 +202,7 @@ export const addYoutube = (title, url, image) => async (dispatch) => {
         headers: {
           "Content-Type": "application/json",
         },
+        withCredentials:true,
       }
     );
 
@@ -213,7 +223,9 @@ export const deleteYoutube = (id) => async (dispatch) => {
       type: "DELETE_YOUTUBE_REQUEST",
     });
 
-    const { data } = await axios.delete(`https://portfolio-threejs.onrender.com/api/v1/admin/youtube/${id}`);
+    const { data } = await axios.delete(`https://portfolio-threejs.onrender.com/api/v1/admin/youtube/${id}`,{
+      withCredentials:true,
+    });
 
     dispatch({
       type: "DELETE_YOUTUBE_SUCCESS",
@@ -246,6 +258,7 @@ export const addProject =
           headers: {
             "Content-Type": "application/json",
           },
+          withCredentials:true,
         }
       );
 
@@ -266,7 +279,9 @@ export const deleteProject = (id) => async (dispatch) => {
       type: "DELETE_PROJECT_REQUEST",
     });
 
-    const { data } = await axios.delete(`https://portfolio-threejs.onrender.com/api/v1/admin/project/${id}`);
+    const { data } = await axios.delete(`https://portfolio-threejs.onrender.com/api/v1/admin/project/${id}`,{
+      withCredentials:true,
+    });
 
     dispatch({
       type: "DELETE_PROJECT_SUCCESS",
@@ -295,6 +310,7 @@ export const contactUs = (name, email, message) => async (dispatch) => {
       headers: { 
         "Content-Type": "application/json",
       },
+      withCredentials:true,
     });
 
     dispatch({

@@ -15,10 +15,11 @@ const Timeline = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
+  const [image, setImage] = useState("");
 
   const submitHandler = async (e) => { 
     e.preventDefault();
-    await dispatch(addTimeline(title, description, date));
+    await dispatch(addTimeline(title, description,image, date));
     dispatch(getUser());
 
 
@@ -28,6 +29,17 @@ const Timeline = () => {
     dispatch(getUser());
   };
   
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    const Reader = new FileReader();
+    Reader.readAsDataURL(file);
+
+    Reader.onload = () => {
+      if (Reader.readyState === 2) {
+        setImage(Reader.result);
+      }
+    };
+  };
   
   
   useEffect(() => {
@@ -72,6 +84,13 @@ const Timeline = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="adminPanelInputs"
+          />
+          <input
+            type="file"
+            placeholder="Image"
+            onChange={handleImage}
+            className="adminPanelFileUpload"
+            accept="image/*"
           />
           <input
             type="date"

@@ -4,7 +4,6 @@ import * as THREE from "three";
 import moonImage from "../../Images/moon.jpg";
 import venusImage from "../../Images/venus.jpg";
 import spaceImage from "../../Images/space.jpg";
-import customImg from "../../Images/logo.jpg";
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";  // so that we can see idhar udhar of moon
 import Typography from "@mui/material/Typography";
 import TimeLine from "../TimeLine/TimeLine";
@@ -190,7 +189,7 @@ const Home = ({ timelines, youtube, skills }) => {
       </div>
 
       <div className="homeYoutube">
-        <Typography variant="h3">YOUTUBE VIDEOS</Typography>
+        <Typography variant="h3">CERTIFICATES AND ACHIEVEMENTS</Typography>
         <div className="homeYoutubeWrapper">
           {youtube.map((item) => (
             <YoutubeCard

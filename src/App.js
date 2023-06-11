@@ -44,7 +44,7 @@ function App() {
             />
             <Route path="/admin/timeline" element={isAuthenticated ? <Timeline /> : <Login />}
             />
-            <Route path="/admin/youtube" element={isAuthenticated ? <YouTube /> : <Login />}
+            <Route path="/admin/certificates" element={isAuthenticated ? <YouTube /> : <Login />}
             />
             <Route path="/admin/project" element={isAuthenticated ? <Project /> : <Login />}
             />
