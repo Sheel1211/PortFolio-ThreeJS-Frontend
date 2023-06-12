@@ -1,12 +1,21 @@
 import axios from "axios";
 
+const config = {
+  headers:{
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+  },
+  mode:'cors',
+  credentials:'include',
+  withCredentials:true
+}
 export const getUser = () => async (dispatch) => {
   try {
     dispatch({
       type: "GET_USER_REQUEST",
     });
 
-    const { data } = await axios.get("http://localhost:4000/api/v1/user");
+    const { data } = await axios.get("http://localhost:4000/api/v1/user",config);
 
     dispatch({
       type: "GET_USER_SUCCESS",
@@ -31,12 +40,7 @@ export const login = (email, password) => async (dispatch) => {
         email,
         password,
       },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials:true,
-      }
+      config
     );
 
     dispatch({
@@ -57,9 +61,7 @@ export const logout = () => async (dispatch) => {
       type: "LOGOUT_REQUEST",
     });
 
-    const { data } = await axios.get("http://localhost:4000/api/v1/logout",{
-      withCredentials:true,
-    });
+    const { data } = await axios.get("http://localhost:4000/api/v1/logout",config);
 
     dispatch({
       type: "LOGOUT_SUCCESS",
@@ -79,7 +81,7 @@ export const loadUser = () => async (dispatch) => {
       type: "LOAD_USER_REQUEST",
     });
 
-    const { data } = await axios.get("http://localhost:4000/api/v1/me");
+    const { data } = await axios.get("http://localhost:4000/api/v1/me",config);
 
     dispatch({
       type: "LOAD_USER_SUCCESS",
@@ -108,13 +110,7 @@ export const updateUser =
           password,
           skills,
           about,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials:true,
-        }
+        },config
       );
 
       dispatch({
@@ -144,13 +140,7 @@ export const addTimeline =
           description,
           image,
           date,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials:true,
-        }
+        },config
       );
 
       dispatch({
@@ -170,9 +160,8 @@ export const deleteTimeline = (id) => async (dispatch) => {
       type: "DELETE_TIMELINE_REQUEST",
     });
 
-    const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/timeline/${id}`,{
-      withCredentials:true,
-    });
+    const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/timeline/${id}`,config
+    );
 
     dispatch({
       type: "DELETE_TIMELINE_SUCCESS",
@@ -197,13 +186,7 @@ export const addYoutube = (title, url, image) => async (dispatch) => {
         title,
         url,
         image,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials:true,
-      }
+      },config
     );
 
     dispatch({
@@ -223,9 +206,7 @@ export const deleteYoutube = (id) => async (dispatch) => {
       type: "DELETE_YOUTUBE_REQUEST",
     });
 
-    const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/youtube/${id}`,{
-      withCredentials:true,
-    });
+    const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/youtube/${id}`,config);
 
     dispatch({
       type: "DELETE_YOUTUBE_SUCCESS",
@@ -253,13 +234,7 @@ export const addProject =
           image,
           description,
           techStack,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials:true,
-        }
+        },config
       );
 
       dispatch({
@@ -279,9 +254,7 @@ export const deleteProject = (id) => async (dispatch) => {
       type: "DELETE_PROJECT_REQUEST",
     });
 
-    const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/project/${id}`,{
-      withCredentials:true,
-    });
+    const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/project/${id}`,config);
 
     dispatch({
       type: "DELETE_PROJECT_SUCCESS",
@@ -305,13 +278,7 @@ export const contactUs = (name, email, message) => async (dispatch) => {
       name,
       email,
       message,
-    },
-    {
-      headers: { 
-        "Content-Type": "application/json",
-      },
-      withCredentials:true,
-    });
+    },config);
 
     dispatch({
       type: "CONTACT_US_SUCCESS",
