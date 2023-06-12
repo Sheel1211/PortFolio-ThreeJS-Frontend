@@ -53,6 +53,7 @@
     margin: 2vmax 0;
     border: 1px solid white;
     transition: all 0.5s;
+    border-radius: 4px;
   }
   
   .footerContactBtn > p {

@@ -141,7 +141,7 @@ const Home = ({ timelines, youtube, skills }) => {
           <Typography variant="h2">COMPETITIVE-PROGRAMMER</Typography>
         </div>
 
-        <Link to="/projects">VIEW WORK</Link>
+        <Link to="https://drive.google.com/file/d/1LxHjO0y--cp0gRKCB5agYYm819jeNBLd/view?usp=drive_link">DOWNLOAD RESUME</Link>
       </div>
 
       <div className="homeScrollBtn">
