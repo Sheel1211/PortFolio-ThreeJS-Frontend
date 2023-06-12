@@ -26,7 +26,7 @@ const AdminPanel = () => {
     e.preventDefault();
     dispatch(updateUser(name, email, password, skills, about));
 
-    console.log(name, email, password, skills, about);
+    // console.log(name, email, password, skills, about);
   };
 
   const logoutHandler = () => {

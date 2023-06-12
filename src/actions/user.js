@@ -1,6 +1,8 @@
 import Cookies from "js-cookie";
 import axios from "axios";
 
+const domain="https://portfolio-threejs.onrender.com";
+
 const config = {
   headers:{
       Accept: 'application/json',
@@ -16,7 +18,7 @@ export const getUser = () => async (dispatch) => {
       type: "GET_USER_REQUEST",
     });
 
-    const { data } = await axios.get("http://localhost:4000/api/v1/user",config);
+    const { data } = await axios.get(domain+"/api/v1/user",config);
 
     dispatch({
       type: "GET_USER_SUCCESS",
@@ -36,7 +38,7 @@ export const login = (email, password) => async (dispatch) => {
     });
 
     const { data } = await axios.post(
-      "http://localhost:4000/api/v1/login",
+      domain+"/api/v1/login",
       {
         email,
         password,
@@ -62,7 +64,7 @@ export const logout = () => async (dispatch) => {
       type: "LOGOUT_REQUEST",
     });
 
-    const { data } = await axios.get("http://localhost:4000/api/v1/logout",config);
+    const { data } = await axios.get(domain+"/api/v1/logout",config);
     Cookies.remove("token");
     dispatch({
       type: "LOGOUT_SUCCESS",
@@ -82,7 +84,7 @@ export const loadUser = () => async (dispatch) => {
       type: "LOAD_USER_REQUEST",
     });
 
-    const { data } = await axios.get("http://localhost:4000/api/v1/me",config);
+    const { data } = await axios.get(domain+"/api/v1/me",config);
 
     dispatch({
       type: "LOAD_USER_SUCCESS",
@@ -104,7 +106,7 @@ export const updateUser =
       });
 
       const { data } = await axios.put(
-        "http://localhost:4000/api/v1/admin/update",
+        domain+"/api/v1/admin/update",
         {
           name,
           email,
@@ -135,7 +137,7 @@ export const addTimeline =
       
       // console.log(title + " "+ description + " " + image + " " + date);
       const { data } = await axios.post(
-        "http://localhost:4000/api/v1/admin/timeline/add",
+        domain+"/api/v1/admin/timeline/add",
         {
           title,
           description,
@@ -161,7 +163,7 @@ export const deleteTimeline = (id) => async (dispatch) => {
       type: "DELETE_TIMELINE_REQUEST",
     });
 
-    const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/timeline/${id}`,config
+    const { data } = await axios.delete(domain+`/api/v1/admin/timeline/${id}`,config
     );
 
     dispatch({
@@ -182,7 +184,7 @@ export const addYoutube = (title, url, image) => async (dispatch) => {
     });
 
     const { data } = await axios.post(
-      "http://localhost:4000/api/v1/admin/youtube/add",
+      domain+"/api/v1/admin/youtube/add",
       {
         title,
         url,
@@ -207,7 +209,7 @@ export const deleteYoutube = (id) => async (dispatch) => {
       type: "DELETE_YOUTUBE_REQUEST",
     });
 
-    const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/youtube/${id}`,config);
+    const { data } = await axios.delete(domain+`/api/v1/admin/youtube/${id}`,config);
 
     dispatch({
       type: "DELETE_YOUTUBE_SUCCESS",
@@ -228,7 +230,7 @@ export const addProject =
       });
 
       const { data } = await axios.post(
-        "http://localhost:4000/api/v1/admin/project/add",
+        domain+"/api/v1/admin/project/add",
         {
           url,
           title,
@@ -255,7 +257,7 @@ export const deleteProject = (id) => async (dispatch) => {
       type: "DELETE_PROJECT_REQUEST",
     });
 
-    const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/project/${id}`,config);
+    const { data } = await axios.delete(domain+`/api/v1/admin/project/${id}`,config);
 
     dispatch({
       type: "DELETE_PROJECT_SUCCESS",
@@ -275,7 +277,7 @@ export const contactUs = (name, email, message) => async (dispatch) => {
       type: "CONTACT_US_REQUEST",
     });
 
-    const { data } = await axios.post("http://localhost:4000/api/v1/contact", {
+    const { data } = await axios.post(domain+"/api/v1/contact", {
       name,
       email,
       message,
