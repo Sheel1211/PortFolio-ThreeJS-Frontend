@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import axios from "axios";
 
 const config = {
@@ -42,7 +43,7 @@ export const login = (email, password) => async (dispatch) => {
       },
       config
     );
-
+    Cookies.set("token",data.token,{expires:7});
     dispatch({
       type: "LOGIN_SUCCESS",
       payload: data.message,
