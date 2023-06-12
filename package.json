@@ -50,5 +50,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://portfolio-threejs.onrender.com"
+  "proxy": "http://localhost:4000"
 }
