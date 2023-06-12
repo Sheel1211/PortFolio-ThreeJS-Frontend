@@ -63,7 +63,7 @@ export const logout = () => async (dispatch) => {
     });
 
     const { data } = await axios.get("http://localhost:4000/api/v1/logout",config);
-
+    Cookies.remove("token");
     dispatch({
       type: "LOGOUT_SUCCESS",
       payload: data.message,
