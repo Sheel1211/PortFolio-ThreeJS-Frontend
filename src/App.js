@@ -26,6 +26,8 @@ function App() {
     dispatch(loadUser());
   }, [dispatch]);
 
+  window.addEventListener("contextmenu", (e) => e.preventDefault());
+
   return (
     <Router>
       {loading ? (
