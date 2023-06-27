@@ -1,0 +1,31 @@
+.adminPanelInputs {
+    width: 50%;
+    padding: 1vmax 2vmax;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    font: 100 1rem "Roboto", sans-serif;
+    outline: none;
+    margin: 2vmax;
+    box-sizing: border-box;
+  }
+
+  .dateDiv{
+    display:flex;
+    margin:auto;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .checkDiv{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    min-width :20vmax;
+  }
+  .checkDiv > h5{
+    min-width:20vmax;
+  }
+  .checkDiv > input[type=checkbox]{
+    transform: scale(1.5);
+  }

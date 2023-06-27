@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import { addTimeline, deleteTimeline, getUser } from "../../actions/user";
+import "./adminTimeline.css";
 const Timeline = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -14,21 +15,39 @@ const Timeline = () => {
   const { user } = useSelector((state) => state.user.user);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [image, setImage] = useState("");
+  const [check, setCheck] = useState(false);
 
-  const submitHandler = async (e) => { 
+  const submitHandler = async (e) => {
     e.preventDefault();
-    await dispatch(addTimeline(title, description,image, date));
+
+    let sDate = new Date(startDate);
+    let eDate = new Date(endDate);
+
+    if (sDate > eDate) {
+      alert.error("Start Date must be greater than End Date");
+      return;
+    }
+
+    if (check) {
+      const isPresent="Present";
+      await dispatch(addTimeline(title, description, image, startDate, isPresent));
+    }
+    else{
+      await dispatch(addTimeline(title, description, image, startDate, endDate));
+      
+    }
+
+
     dispatch(getUser());
-
-
   };
-  const deleteHandler = async(id) => {
+  const deleteHandler = async (id) => {
     await dispatch(deleteTimeline(id));
     dispatch(getUser());
   };
-  
+
   const handleImage = (e) => {
     const file = e.target.files[0];
     const Reader = new FileReader();
@@ -40,8 +59,7 @@ const Timeline = () => {
       }
     };
   };
-  
-  
+
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -51,7 +69,6 @@ const Timeline = () => {
       alert.success(message);
       dispatch({ type: "CLEAR_MESSAGE" });
     }
-    
   }, [alert, error, message, dispatch]);
   return (
     <div className="adminPanel">
@@ -92,13 +109,38 @@ const Timeline = () => {
             className="adminPanelFileUpload"
             accept="image/*"
           />
-          <input
-            type="date"
-            placeholder="Date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="adminPanelInputs"
-          />
+
+          <div className="dateDiv">
+            <Typography variant="h5">Start Date</Typography>
+            <input
+              type="date"
+              placeholder="Date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              className="adminPanelInputs"
+            />
+          </div>
+
+          <div className="dateDiv">
+            <Typography variant="h5">End Date</Typography>
+            <input
+              type="date"
+              placeholder="Date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              className="adminPanelInputs"
+              disabled={check}
+            />
+          </div>
+          <div className="checkDiv">
+            <Typography variant="h5">Currently Working</Typography>
+            <input
+              type="checkbox"
+              value={check}
+              onChange={(e) => setCheck(!check)}
+              className="adminPanelInputs"
+            />
+          </div>
 
           <Link to="/Account">
             BACK <MdKeyboardBackspace />
@@ -109,18 +151,23 @@ const Timeline = () => {
           </Button>
         </form>
         <div className="adminPanelYoutubeVideos">
-        {user &&
+          {user &&
             user.timeline &&
             user.timeline.map((item) => (
-              
-               <div className="youtubeCard" key={item._id}>
-                 <Typography variant="h6">{item.title}</Typography>
-                 <Typography variant="body1" style={{ letterSpacing: "2px" }}>
-                   {item.description}
-                 </Typography>
-                 <Typography variant="body1" style={{ fontWeight: 600 }}>
-                   {item.date.toString().split("T")[0]}
-                 </Typography>
+              <div className="youtubeCard" key={item._id}>
+                <Typography variant="h6">{item.title}</Typography>
+                <Typography variant="body1" style={{ letterSpacing: "2px" }}>
+                  {item.description}
+                </Typography>
+                <Typography variant="body1" style={{ fontWeight: 600 }}>
+                  {item.startDate.toString().split("T")[0]}
+                </Typography>
+                <Typography variant="body1" style={{ fontWeight: 600 }}>
+                  to
+                </Typography>
+                <Typography variant="body1" style={{ fontWeight: 600 }}>
+                  {item.currentlyWorking===true?"Present":item.endDate.toString().split("T")[0]}
+                </Typography>
 
                 <Button
                   style={{

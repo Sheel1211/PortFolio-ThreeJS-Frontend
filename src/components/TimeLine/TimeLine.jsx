@@ -36,7 +36,7 @@ const TimeLine = ({ timelines }) => {
             contentArrowStyle={{
               borderRight: "7px solid  hsl(250, 100%, 75%)",
             }}
-            date={item.date.toString().split("T")[0]}
+            date={item.startDate.toString().split("T")[0]}
             dateStyle={{ color: "hsl(250, 100%, 75%" }}
             iconStyle={{
               background: "hsl(250, 100%, 75%)",
@@ -46,7 +46,9 @@ const TimeLine = ({ timelines }) => {
             icon={<MyImg imagePath={item.image.url} />}
           >
             <h3 className="vertical-timeline-element-title">{item.title}</h3>
-            <h4 className="vertical-timeline-element-subtitle">{item.date.toString().split("T")[0].split("-")[1] + " - " + item.date.toString().split("T")[0].split("-")[0]}</h4>
+            <h4 className="vertical-timeline-element-subtitle">{item.startDate.toString().split("T")[0].split("-")[1] + " - " + item.startDate.toString().split("T")[0].split("-")[0] + "  "}
+            to
+            {item.currentlyWorking===true ? "  Present" : "  " +item.endDate.toString().split("T")[0].split("-")[1] + " - " + item.endDate.toString().split("T")[0].split("-")[0]}</h4>
             <p>{item.description}</p>
           </VerticalTimelineElement>
         ))}

@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 
 const domain="https://portfolio-threejs.onrender.com";
+// const domain="http://localhost:4000";
 
 const config = {
   headers:{
@@ -128,7 +129,7 @@ export const updateUser =
     }
   };
 export const addTimeline =
-  (title, description, image,date = "1970-01-01T00:00:00.000+00:00") =>
+  (title, description, image,startDate = "1970-01-01T00:00:00.000+00:00",endDate) =>
   async (dispatch) => {
     try {
       dispatch({
@@ -142,7 +143,8 @@ export const addTimeline =
           title,
           description,
           image,
-          date,
+          startDate,
+          endDate
         },config
       );
 
